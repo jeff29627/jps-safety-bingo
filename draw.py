@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Draw one unique bingo ball per Eastern calendar day, or manually reset."""
+"""Draw one unique BSAFE ball per Eastern calendar day, or manually reset."""
 import argparse
 import json
 import os
@@ -12,7 +12,7 @@ STATE = Path(__file__).with_name('state.json')
 ET = ZoneInfo('America/New_York')
 
 def label(n):
-    return 'BINGO'[(n-1)//15] + '-' + str(n)
+    return 'BSAFE'[(n-1)//15] + '-' + str(n)
 
 def main():
     p = argparse.ArgumentParser()

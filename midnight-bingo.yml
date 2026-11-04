@@ -1,0 +1,45 @@
+name: JPS Safety BINGO midnight draw
+on:
+  schedule:
+    # Check hourly at :17 UTC. Python only draws during 00:00-00:59 America/New_York.
+    # This handles EST/EDT without manually changing cron expressions.
+    - cron: '17 * * * *'
+  workflow_dispatch:
+    inputs:
+      action:
+        description: 'draw (only at midnight ET), or reset game'
+        required: true
+        default: 'draw'
+        type: choice
+        options:
+          - draw
+          - reset
+permissions:
+  contents: write
+concurrency:
+  group: jps-bingo-state
+  cancel-in-progress: false
+jobs:
+  update:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: true
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Draw or reset
+        env:
+          ACTION: ${{ github.event.inputs.action }}
+        run: |
+          if [ "$ACTION" = "reset" ]; then python draw.py --reset; else python draw.py; fi
+      - name: Commit updated state if changed
+        run: |
+          if ! git diff --quiet -- state.json; then
+            git config user.name 'JPS Bingo Bot'
+            git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+            git add state.json
+            git commit -m 'Update Safety BINGO state'
+            git push
+          fi

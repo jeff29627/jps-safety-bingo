@@ -1,6 +1,13 @@
 {
   "game_id": 1,
   "started_at": "2026-11-04",
-  "last_draw_date": null,
-  "draws": []
+  "last_draw_date": "2026-11-05",
+  "draws": [
+    {
+      "number": 41,
+      "ball": "A-41",
+      "date": "2026-11-05",
+      "drawn_at": "2026-11-05T00:06:04.842099-05:00"
+    }
+  ]
 }

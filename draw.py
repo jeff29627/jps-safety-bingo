@@ -44,12 +44,7 @@ def main():
         print('Reset game', data['game_id'])
 
     else:
-        # Automatic draws only occur at midnight Eastern.
-        if not args.force and now.hour != 0:
-            print('Not midnight Eastern; no draw')
-            return
-
-        # Skip weekends and company holidays for automatic draws.
+         # Skip weekends and company holidays for automatic draws.
         if not args.force:
             if now.weekday() >= 5:
                 print('Weekend; no BSAFE drawing')
